@@ -3,6 +3,30 @@
   "WorkspaceRootPath": "C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|solutionrelative:Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|solutionrelative:Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|solutionrelative:Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Map.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|solutionrelative:Map.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|solutionrelative:Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Map.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|solutionrelative:Map.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Utils.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|solutionrelative:Utils.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -29,30 +53,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|solutionrelative:Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|solutionrelative:Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Map.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|solutionrelative:Map.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Map.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|solutionrelative:Map.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|solutionrelative:Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|solutionrelative:Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3CD1768F-0A73-41FE-B729-A3CE1F2CB9FD}|GrandTheftAuto_ENTICity.vcxproj|solutionrelative:Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -62,11 +62,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 12,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "Utils.h",
               "DocumentMoniker": "C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Utils.h",
               "RelativeDocumentMoniker": "Utils.h",
@@ -79,7 +79,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
               "Title": "Utils.cpp",
               "DocumentMoniker": "C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Utils.cpp",
               "RelativeDocumentMoniker": "Utils.cpp",
@@ -87,12 +87,11 @@
               "RelativeToolTip": "Utils.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-05-01T11:26:48.698Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-01T11:26:48.698Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 8,
               "Title": "Config.h",
               "DocumentMoniker": "C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Config.h",
               "RelativeDocumentMoniker": "Config.h",
@@ -100,12 +99,11 @@
               "RelativeToolTip": "Config.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-05-01T11:26:24.36Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-01T11:26:24.36Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
               "Title": "Config.cpp",
               "DocumentMoniker": "C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Config.cpp",
               "RelativeDocumentMoniker": "Config.cpp",
@@ -113,12 +111,11 @@
               "RelativeToolTip": "Config.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-05-01T11:26:10.069Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-01T11:26:10.069Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 10,
               "Title": "Pedestrian.h",
               "DocumentMoniker": "C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Pedestrian.h",
               "RelativeDocumentMoniker": "Pedestrian.h",
@@ -126,12 +123,11 @@
               "RelativeToolTip": "Pedestrian.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-05-01T11:25:55.816Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-01T11:25:55.816Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 11,
               "Title": "Pedestrian.cpp",
               "DocumentMoniker": "C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Pedestrian.cpp",
               "RelativeDocumentMoniker": "Pedestrian.cpp",
@@ -139,12 +135,11 @@
               "RelativeToolTip": "Pedestrian.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-05-01T11:25:48.061Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-01T11:25:48.061Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 12,
               "Title": "Player.h",
               "DocumentMoniker": "C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Player.h",
               "RelativeDocumentMoniker": "Player.h",
@@ -152,12 +147,11 @@
               "RelativeToolTip": "Player.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-05-01T11:25:35.537Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-01T11:25:35.537Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 4,
               "Title": "Player.cpp",
               "DocumentMoniker": "C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Player.cpp",
               "RelativeDocumentMoniker": "Player.cpp",
@@ -170,7 +164,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 5,
               "Title": "Map.h",
               "DocumentMoniker": "C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Map.h",
               "RelativeDocumentMoniker": "Map.h",
@@ -183,7 +177,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 3,
               "Title": "Map.cpp",
               "DocumentMoniker": "C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Map.cpp",
               "RelativeDocumentMoniker": "Map.cpp",
@@ -196,39 +190,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 1,
               "Title": "Game.h",
               "DocumentMoniker": "C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Game.h",
               "RelativeDocumentMoniker": "Game.h",
               "ToolTip": "C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Game.h",
               "RelativeToolTip": "Game.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-05-01T11:24:47.208Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 2,
               "Title": "Game.cpp",
               "DocumentMoniker": "C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Game.cpp",
               "RelativeDocumentMoniker": "Game.cpp",
               "ToolTip": "C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Game.cpp",
               "RelativeToolTip": "Game.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-05-01T11:24:35.236Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 0,
               "Title": "Main.cpp",
               "DocumentMoniker": "C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Main.cpp",
               "RelativeDocumentMoniker": "Main.cpp",
               "ToolTip": "C:\\Users\\paura\\Desktop\\G00_DiazPauRafel_VilarnauBiel_AA2\\GrandTheftAuto_ENTICity\\Main.cpp",
               "RelativeToolTip": "Main.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-05-01T11:11:55.442Z",
               "EditorCaption": ""
