@@ -26,6 +26,10 @@ void Game::run() {
 
 void Game::init() {
     std::cout << "Prueba iniciando el juego..." << std::endl;
+
+    ConfigData config = loadConfig("config.txt");
+    std::cout << "Tamaño del mapa: " << config.mapWidth << " x " << config.mapHeight << std::endl;
+    std::cout << "Peatones en Los Santos: " << config.pedestriansLosSantos << std::endl;
 }
 
 void Game::update() {
