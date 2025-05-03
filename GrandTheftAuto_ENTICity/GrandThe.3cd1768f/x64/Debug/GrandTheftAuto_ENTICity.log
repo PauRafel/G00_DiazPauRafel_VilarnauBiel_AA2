@@ -1,4 +1,10 @@
-﻿  Game.cpp
+﻿  Config.cpp
+  Game.cpp
   Main.cpp
+  Map.cpp
+  Pedestrian.cpp
+  Player.cpp
+  Utils.cpp
   Generando código...
+  LINK : no se encontró C:\Users\paura\Desktop\G00_DiazPauRafel_VilarnauBiel_AA2\GrandTheftAuto_ENTICity\x64\Debug\GrandTheftAuto_ENTICity.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
   GrandTheftAuto_ENTICity.vcxproj -> C:\Users\paura\Desktop\G00_DiazPauRafel_VilarnauBiel_AA2\GrandTheftAuto_ENTICity\x64\Debug\GrandTheftAuto_ENTICity.exe

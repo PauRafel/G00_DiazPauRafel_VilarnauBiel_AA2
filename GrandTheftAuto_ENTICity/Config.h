@@ -14,5 +14,4 @@ struct ConfigData {
     int maxMoneySanFierro;
 };
 
-// Función para cargar la configuración
 ConfigData loadConfig(const std::string& filename);
