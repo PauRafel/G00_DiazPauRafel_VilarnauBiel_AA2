@@ -1,4 +1,5 @@
 #pragma once
+#include "Map.h"
 
 class Game {
 public:
@@ -8,8 +9,11 @@ public:
     void run(); 
 
 private:
+    Map* map;
+    int playerX, playerY;
+    bool isRunning;
+
     void init(); 
     void update(); 
-    void render(); 
-    bool isRunning;
+    void render();
 };

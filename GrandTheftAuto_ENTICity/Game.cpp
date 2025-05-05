@@ -8,6 +8,9 @@
 
 Game::Game() {
     isRunning = true;
+    map = nullptr;
+    playerX = 1;
+    playerY = 1;
 }
 
 Game::~Game() {
@@ -25,11 +28,14 @@ void Game::run() {
 }
 
 void Game::init() {
-    std::cout << "Prueba iniciando el juego..." << std::endl;
+    std::cout << "Iniciando el juego..." << std::endl;
 
     ConfigData config = loadConfig("config.txt");
-    std::cout << "Tamaño del mapa: " << config.mapWidth << " x " << config.mapHeight << std::endl;
-    std::cout << "Peatones en Los Santos: " << config.pedestriansLosSantos << std::endl;
+
+    map = new Map(config.mapWidth, config.mapHeight);
+    map->initialize();
+
+    map->getData()[playerY][playerX] = 'v';
 }
 
 void Game::update() {
@@ -40,5 +46,11 @@ void Game::update() {
 }
 
 void Game::render() {
-    
+    map->render(playerX, playerY, 20, 10);
+}
+
+Game::~Game() {
+    if (map != nullptr) {
+        delete map;
+    }
 }
