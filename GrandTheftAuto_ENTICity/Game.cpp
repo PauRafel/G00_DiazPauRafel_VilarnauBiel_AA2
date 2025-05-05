@@ -14,7 +14,9 @@ Game::Game() {
 }
 
 Game::~Game() {
-    
+    if (map != nullptr) {
+        delete map;
+    }
 }
 
 void Game::run() {
@@ -47,10 +49,4 @@ void Game::update() {
 
 void Game::render() {
     map->render(playerX, playerY, 20, 10);
-}
-
-Game::~Game() {
-    if (map != nullptr) {
-        delete map;
-    }
 }
