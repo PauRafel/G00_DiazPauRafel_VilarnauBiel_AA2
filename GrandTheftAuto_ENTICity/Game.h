@@ -3,17 +3,20 @@
 
 class Game {
 public:
+
     Game();
     ~Game();
 
     void run(); 
 
 private:
-    Map* map;
-    int playerX, playerY;
+
+    void init();
+    void update();
+    void render();
+
     bool isRunning;
 
-    void init(); 
-    void update(); 
-    void render();
+    Map* map;
+    int playerX, playerY;
 };
