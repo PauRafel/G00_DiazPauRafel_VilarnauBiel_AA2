@@ -1,6 +1,8 @@
-#include "Game.h"
 #include <iostream>
 #include <windows.h> 
+#include <cstdlib>
+#include <ctime>
+#include "Game.h"
 #include "Config.h"  
 #include "Map.h"     
 #include "Player.h"  
@@ -30,14 +32,17 @@ void Game::run() {
 }
 
 void Game::init() {
-    std::cout << "Iniciando el juego..." << std::endl;
+    srand(static_cast<unsigned int>(time(nullptr)));
 
+    std::cout << "Iniciando el juego..." << std::endl;
     ConfigData config = loadConfig("config.txt");
 
     map = new Map(config.mapWidth, config.mapHeight);
     map->initialize();
 
     map->getData()[playerY][playerX] = 'v';
+
+    spawnPedestrians(config.pedestriansLosSantos);
 }
 
 void Game::update() {

@@ -1,5 +1,7 @@
 #pragma once
 #include "Map.h"
+#include <vector>
+#include "Pedestrian.h"
 
 class Game {
 public:
@@ -10,13 +12,17 @@ public:
     void run(); 
 
 private:
-
-    void init();
-    void update();
-    void render();
-
     bool isRunning;
 
     Map* map;
     int playerX, playerY;
+
+    std::vector<Pedestrian> pedestrians;
+    
+    void init();
+    void update();
+    void render();
+
+    void spawnPedestrians(int numPeatones);
+    void updatePedestrians();
 };
