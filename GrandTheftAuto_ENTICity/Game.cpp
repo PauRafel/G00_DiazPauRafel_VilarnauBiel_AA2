@@ -23,6 +23,7 @@ Game::~Game() {
 
 void Game::run() {
     init();
+    money = 0;
 
     while (isRunning) {
         update();
@@ -77,7 +78,29 @@ void Game::update() {
         map->getData()[playerY][playerX] = 'v'; 
     }
 
+    
+    if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+        
+        for (auto& p : pedestrians) {
+            if (!p.isAlive) continue;
+
+            if ((abs(p.x - playerX) + abs(p.y - playerY)) == 1) { 
+                p.isAlive = false;
+
+                
+                map->getData()[p.y][p.x] = '$';
+                break; 
+            }
+        }
+    }
+
     updatePedestrians();
+
+    
+    if (map->getData()[playerY][playerX] == '$') {
+        money += rand() % 100 + 1; 
+        map->getData()[playerY][playerX] = ' '; 
+    }
 
     if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
         isRunning = false;
@@ -86,6 +109,7 @@ void Game::update() {
 
 void Game::render() {
     map->render(playerX, playerY, 20, 10);
+    std::cout << "Dinero: $" << money << std::endl;
 }
 
 void Game::spawnPedestrians(int numPeatones){

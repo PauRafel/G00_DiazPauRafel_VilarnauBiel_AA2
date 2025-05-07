@@ -10,6 +10,7 @@ public:
     ~Game();
 
     void run(); 
+    int money; 
 
 private:
     bool isRunning;
