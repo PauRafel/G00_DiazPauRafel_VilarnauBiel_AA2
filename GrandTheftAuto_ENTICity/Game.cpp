@@ -49,63 +49,67 @@ void Game::init() {
 void Game::update() {
     map->getData()[playerY][playerX] = ' ';
 
+    bool moved = false;
+    char newSymbol = 'v'; 
+
     if (GetAsyncKeyState(VK_UP) & 0x8000) {
-        if (map->getData()[playerY - 1][playerX] != 'X') { 
+        if (map->getData()[playerY - 1][playerX] != 'X') {
             playerY--;
+            newSymbol = '^';
+            moved = true;
         }
-        map->getData()[playerY][playerX] = '^'; 
     }
     else if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
         if (map->getData()[playerY + 1][playerX] != 'X') {
             playerY++;
+            newSymbol = 'v';
+            moved = true;
         }
-        map->getData()[playerY][playerX] = 'v';
     }
     else if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
         if (map->getData()[playerY][playerX - 1] != 'X') {
             playerX--;
+            newSymbol = '<';
+            moved = true;
         }
-        map->getData()[playerY][playerX] = '<';
     }
     else if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
         if (map->getData()[playerY][playerX + 1] != 'X') {
             playerX++;
-        }
-        map->getData()[playerY][playerX] = '>';
-    }
-    else {
-        
-        map->getData()[playerY][playerX] = 'v'; 
-    }
-
-    
-    if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
-        
-        for (auto& p : pedestrians) {
-            if (!p.isAlive) continue;
-
-            if ((abs(p.x - playerX) + abs(p.y - playerY)) == 1) { 
-                p.isAlive = false;
-
-                
-                map->getData()[p.y][p.x] = '$';
-                break; 
-            }
+            newSymbol = '>';
+            moved = true;
         }
     }
 
-    updatePedestrians();
-
-    
     if (map->getData()[playerY][playerX] == '$') {
         money += rand() % 100 + 1; 
         map->getData()[playerY][playerX] = ' '; 
     }
 
+    
+    map->getData()[playerY][playerX] = newSymbol;
+
+    
+    if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+        for (auto& p : pedestrians) {
+            if (!p.isAlive) continue;
+            if ((abs(p.x - playerX) + abs(p.y - playerY)) == 1) {
+                p.isAlive = false;
+                map->getData()[p.y][p.x] = '$';
+                break;
+            }
+        }
+    }
+
+   
+    updatePedestrians();
+
+  
     if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
         isRunning = false;
     }
 }
+
 
 void Game::render() {
     map->render(playerX, playerY, 20, 10);
