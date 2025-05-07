@@ -57,7 +57,3 @@ void Map::render(int playerX, int playerY, int viewWidth, int viewHeight) {
         std::cout << std::endl;
     }
 }
-
-char** Map::getData() {
-    return data;
-}

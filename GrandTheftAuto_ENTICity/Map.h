@@ -8,7 +8,10 @@ public:
 
     void initialize();    
     void render(int playerX, int playerY, int viewWidth, int viewHeight); 
-    char** getData();      
+    char** getData() { return data; }
+    int getWidth() const { return width; }
+    int getHeight() const { return height; }
+
 
 private:
     int width;

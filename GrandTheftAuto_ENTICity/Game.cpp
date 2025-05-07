@@ -77,6 +77,8 @@ void Game::update() {
         map->getData()[playerY][playerX] = 'v'; 
     }
 
+    updatePedestrians();
+
     if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
         isRunning = false;
     }
@@ -84,4 +86,48 @@ void Game::update() {
 
 void Game::render() {
     map->render(playerX, playerY, 20, 10);
-}   
+}
+
+void Game::spawnPedestrians(int numPeatones){
+    for (int i = 0; i < numPeatones; ++i) {
+        Pedestrian p;
+
+        do {
+            p.x = rand() % map->getWidth();
+            p.y = rand() % map->getHeight();
+        } while (map->getData()[p.y][p.x] != ' ');
+
+        p.movesHorizontally = (rand() % 2 == 0);
+        p.isAlive = true;
+
+        pedestrians.push_back(p);
+
+        map->getData()[p.y][p.x] = 'P';
+    }
+}
+
+void Game::updatePedestrians(){
+    for (auto& p : pedestrians) {
+        if (!p.isAlive) continue;
+
+        if (abs(playerX - p.x) <= 1 && abs(playerY - p.y) <= 1) continue;
+
+        map->getData()[p.y][p.x] = ' ';
+
+        int move = (rand() % 2 == 0) ? -1 : 1;
+
+        if (p.movesHorizontally) {
+            if (map->getData()[p.y][p.x + move] == ' ') {
+                p.x += move;
+            }
+        }
+        else {
+            if (map->getData()[p.y + move][p.x] == ' ') {
+                p.y += move;
+            }
+        }
+
+        map->getData()[p.y][p.x] = 'P';
+    }
+
+}
