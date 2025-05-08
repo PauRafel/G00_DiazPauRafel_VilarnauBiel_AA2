@@ -1,3 +1,4 @@
+//Pau Rafel Díaz Hernández & Biel Vilarnau Espínola ENTI 2025
 #include <iostream>
 #include <windows.h> 
 #include <cstdlib>
@@ -9,6 +10,7 @@
 #include "Pedestrian.h" 
 
 Game::Game() {
+    money = 0;  
     isRunning = true;
     map = nullptr;
     playerX = 1;
@@ -23,7 +25,6 @@ Game::~Game() {
 
 void Game::run() {
     init();
-    money = 0;
 
     while (isRunning) {
         update();

@@ -1,2 +1,9 @@
-﻿  Game.cpp
+﻿  Config.cpp
+  Game.cpp
+  Main.cpp
+  Map.cpp
+  Pedestrian.cpp
+  Player.cpp
+  Utils.cpp
+  Generando código...
   GrandTheftAuto_ENTICity.vcxproj -> C:\Users\paura\Desktop\G00_DiazPauRafel_VilarnauBiel_AA2\GrandTheftAuto_ENTICity\x64\Debug\GrandTheftAuto_ENTICity.exe

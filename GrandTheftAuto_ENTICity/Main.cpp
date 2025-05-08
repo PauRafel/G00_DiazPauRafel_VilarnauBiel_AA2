@@ -1,3 +1,4 @@
+//Pau Rafel Díaz Hernández & Biel Vilarnau Espínola ENTI 2025
 #include <iostream>
 #include <windows.h>
 #include "Game.h"

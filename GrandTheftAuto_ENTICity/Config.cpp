@@ -1,7 +1,9 @@
-#include "Config.h"
+//Pau Rafel Díaz Hernández & Biel Vilarnau Espínola ENTI 2025
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include "Config.h"
+
 
 ConfigData loadConfig(const std::string& filename) {
     ConfigData config{};

@@ -1,6 +1,8 @@
-#include "Map.h"
+//Pau Rafel Díaz Hernández & Biel Vilarnau Espínola ENTI 2025
 #include <iostream>
 #include <windows.h> 
+#include "Map.h"
+
 
 Map::Map(int width, int height) {
     this->width = width;
