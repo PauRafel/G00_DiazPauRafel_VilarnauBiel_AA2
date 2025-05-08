@@ -96,6 +96,22 @@ void Game::update() {
             if ((abs(p.x - playerX) + abs(p.y - playerY)) == 1) {
                 p.isAlive = false;
                 map->getData()[p.y][p.x] = '$';
+
+                bool placed = false;
+                while (!placed) {
+                    int newX = rand() % map->getWidth();
+                    int newY = rand() % map->getHeight();
+
+                    if (map->getData()[newY][newX] == ' ') {
+                        p.x = newX;
+                        p.y = newY;
+                        p.movesHorizontally = (rand() % 2 == 0);
+                        p.isAlive = true;
+                        map->getData()[p.y][p.x] = 'P';
+                        placed = true;
+                    }
+                }
+
                 break;
             }
         }
