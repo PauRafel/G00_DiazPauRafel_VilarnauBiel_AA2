@@ -12,6 +12,7 @@ public:
 
     void run(); 
     int money; 
+    static const int NUM_FPS = 10;
 
 private:
     bool isRunning;
@@ -27,4 +28,6 @@ private:
 
     void spawnPedestrians(int numPeatones);
     void updatePedestrians();
+
+    void HandleInput(); 
 };

@@ -27,9 +27,10 @@ void Game::run() {
     init();
 
     while (isRunning) {
+        HandleInput();
         update();
         render();
-        Sleep(100); 
+        Sleep(1000 / NUM_FPS);
     }
 }
 
@@ -48,49 +49,9 @@ void Game::init() {
 }
 
 void Game::update() {
-    map->getData()[playerY][playerX] = ' ';
 
     bool moved = false;
-    char newSymbol = 'v'; 
 
-    if (GetAsyncKeyState(VK_UP) & 0x8000) {
-        if (map->getData()[playerY - 1][playerX] != 'X') {
-            playerY--;
-            newSymbol = '^';
-            moved = true;
-        }
-    }
-    else if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
-        if (map->getData()[playerY + 1][playerX] != 'X') {
-            playerY++;
-            newSymbol = 'v';
-            moved = true;
-        }
-    }
-    else if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
-        if (map->getData()[playerY][playerX - 1] != 'X') {
-            playerX--;
-            newSymbol = '<';
-            moved = true;
-        }
-    }
-    else if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
-        if (map->getData()[playerY][playerX + 1] != 'X') {
-            playerX++;
-            newSymbol = '>';
-            moved = true;
-        }
-    }
-
-    if (map->getData()[playerY][playerX] == '$') {
-        money += rand() % 100 + 1; 
-        map->getData()[playerY][playerX] = ' '; 
-    }
-
-    
-    map->getData()[playerY][playerX] = newSymbol;
-
-    
     if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
         for (auto& p : pedestrians) {
             if (!p.isAlive) continue;
@@ -118,15 +79,50 @@ void Game::update() {
         }
     }
 
-   
     updatePedestrians();
 
-  
     if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
         isRunning = false;
     }
 }
 
+void Game::HandleInput() {
+    map->getData()[playerY][playerX] = ' ';
+
+    char newSymbol = 'v'; 
+
+    if (GetAsyncKeyState(VK_UP) & 0x8000) {
+        if (map->getData()[playerY - 1][playerX] != 'X') {
+            playerY--;
+            newSymbol = '^';
+        }
+    }
+    else if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
+        if (map->getData()[playerY + 1][playerX] != 'X') {
+            playerY++;
+            newSymbol = 'v';
+        }
+    }
+    else if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
+        if (map->getData()[playerY][playerX - 1] != 'X') {
+            playerX--;
+            newSymbol = '<';
+        }
+    }
+    else if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
+        if (map->getData()[playerY][playerX + 1] != 'X') {
+            playerX++;
+            newSymbol = '>';
+        }
+    }
+
+    if (map->getData()[playerY][playerX] == '$') {
+        money += rand() % 100 + 1;
+        map->getData()[playerY][playerX] = ' ';
+    }
+
+    map->getData()[playerY][playerX] = newSymbol;
+}
 
 void Game::render() {
     map->render(playerX, playerY, 20, 10);
