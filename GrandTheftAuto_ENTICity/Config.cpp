@@ -10,8 +10,8 @@ ConfigData loadConfig(const std::string& filename) {
     std::ifstream file(filename);
 
     if (!file.is_open()) {
-        std::cerr << "Error: No se pudo abrir el archivo de configuración: " << filename << std::endl;
-        exit(1); 
+        std::cerr << "Error al abrir config.txt" << std::endl;
+        exit(1);
     }
 
     std::string line;
@@ -20,28 +20,37 @@ ConfigData loadConfig(const std::string& filename) {
     while (std::getline(file, line)) {
         std::stringstream ss(line);
         std::string token;
-        int values[3] = { 0 };
-
+        int values[5] = { 0 };
         int i = 0;
-        while (std::getline(ss, token, ';')) {
+
+        while (std::getline(ss, token, ';') && i < 5) {
             if (!token.empty()) {
                 values[i++] = std::stoi(token);
             }
         }
 
-        if (lineNumber == 0) {
+        switch (lineNumber) {
+        case 0:
             config.mapWidth = values[0];
             config.mapHeight = values[1];
-        }
-        else if (lineNumber == 1) {
-            config.pedestriansLosSantos = values[0];
-            config.tollLosSantos = values[1];
-            config.maxMoneyLosSantos = values[2];
-        }
-        else if (lineNumber == 2) {
-            config.pedestriansSanFierro = values[0];
-            config.tollSanFierro = values[1];
-            config.maxMoneySanFierro = values[2];
+            break;
+        case 1:
+            config.playerHP = values[0];
+            config.playerAttack = values[1];
+            break;
+        case 2:
+            config.tollToSanFierro = values[0];
+            config.tollToLasVenturas = values[1];
+            break;
+        case 3:
+            config.losSantos = { values[0], values[1], values[2], values[3] };
+            break;
+        case 4:
+            config.sanFierro = { values[0], values[1], values[2], values[3] };
+            break;
+        case 5:
+            config.lasVenturas = { values[0], values[1], values[2], values[3] };
+            break;
         }
 
         lineNumber++;

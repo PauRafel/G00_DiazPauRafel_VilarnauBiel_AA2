@@ -13,6 +13,7 @@ Game::Game() {
     money = 0;  
     isRunning = true;
     map = nullptr;
+    playerDirection = Direction::Down;
     playerX = 1;
     playerY = 1;
 }
@@ -45,7 +46,7 @@ void Game::init() {
 
     map->GetData()[playerY][playerX].type = CellType::Player;
 
-    spawnPedestrians(config.pedestriansLosSantos);
+    spawnPedestrians(config.losSantos.numPedestrians);
 }
 
 void Game::update() {
@@ -95,38 +96,33 @@ void Game::HandleInput() {
     if (GetAsyncKeyState(VK_UP) & 0x8000) {
         if (map->GetData()[playerY - 1][playerX].type != CellType::Wall) {
             playerY--;
-            newSymbol = '^';
+            playerDirection = Direction::Up;
         }
     }
     else if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
         if (map->GetData()[playerY + 1][playerX].type != CellType::Wall) {
             playerY++;
-            newSymbol = 'v';
+            playerDirection = Direction::Down;
         }
     }
     else if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
         if (map->GetData()[playerY][playerX - 1].type != CellType::Wall) {
             playerX--;
-            newSymbol = '<';
+            playerDirection = Direction::Left;
         }
     }
     else if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
         if (map->GetData()[playerY][playerX + 1].type != CellType::Wall) {
             playerX++;
-            newSymbol = '>';
+            playerDirection = Direction::Right;
         }
-    }
-
-    if (map->GetData()[playerY][playerX].type == CellType::Money) {
-        money += rand() % 100 + 1;
-        map->GetData()[playerY][playerX].type = CellType::Empty;
     }
 
     map->GetData()[playerY][playerX].type = CellType::Player;
 }
 
 void Game::render() {
-    map->render(playerX, playerY, 20, 10);
+    map->render(playerX, playerY, 20, 10, playerDirection);
     std::cout << "Dinero: $" << money << std::endl;
 }
 

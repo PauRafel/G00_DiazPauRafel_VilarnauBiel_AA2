@@ -1,5 +1,5 @@
 ﻿  Game.cpp
-  Main.cpp
   Map.cpp
   Generando código...
+C:\Users\paura\Desktop\G00_DiazPauRafel_VilarnauBiel_AA2\GrandTheftAuto_ENTICity\Map.cpp(56,1): warning C4715: 'GetSymbolForCell': no todas las rutas de acceso de control devuelven un valor
   GrandTheftAuto_ENTICity.vcxproj -> C:\Users\paura\Desktop\G00_DiazPauRafel_VilarnauBiel_AA2\GrandTheftAuto_ENTICity\x64\Debug\GrandTheftAuto_ENTICity.exe

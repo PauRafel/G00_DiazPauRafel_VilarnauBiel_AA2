@@ -3,6 +3,7 @@
 #include <vector>
 #include "Map.h"
 #include "Pedestrian.h"
+#include "Direction.h"
 
 class Game {
 public:
@@ -13,6 +14,7 @@ public:
     void run(); 
     int money; 
     static const int NUM_FPS = 10;
+    Direction playerDirection;
 
 private:
     bool isRunning;

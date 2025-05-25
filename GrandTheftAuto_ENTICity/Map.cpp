@@ -2,7 +2,7 @@
 #include <iostream>
 #include <windows.h> 
 #include "Map.h"
-
+#include "Direction.h"
 
 Map::Map(int width, int height) {
     this->width = width;
@@ -37,17 +37,26 @@ void Map::initialize() {
     }
 }
 
-char GetSymbolForCell(const Cell& cell) {
+char GetSymbolForCell(const Cell& cell, int x, int y, int playerX, int playerY, Direction playerDir) {
+    if (x == playerX && y == playerY) {
+        switch (playerDir) {
+        case Direction::Up: return '^';
+        case Direction::Down: return 'v';
+        case Direction::Left: return '<';
+        case Direction::Right: return '>';
+        }
+    }
+
     switch (cell.type) {
     case CellType::Wall: return 'X';
-    case CellType::Player: return '>';
     case CellType::Pedestrian: return 'P';
     case CellType::Money: return '$';
-    case CellType::Empty: default: return ' ';
+    case CellType::Empty: return ' ';
     }
 }
 
-void Map::render(int playerX, int playerY, int viewWidth, int viewHeight) {
+
+void Map::render(int playerX, int playerY, int viewWidth, int viewHeight, Direction playerDir) {
     system("cls");
 
     int startX = playerX - viewWidth / 2;
@@ -59,7 +68,7 @@ void Map::render(int playerX, int playerY, int viewWidth, int viewHeight) {
             int mapY = startY + y;
 
             if (mapX >= 0 && mapX < width && mapY >= 0 && mapY < height) {
-                std::cout << GetSymbolForCell(data[mapY][mapX]);
+                std::cout << GetSymbolForCell(data[mapY][mapX], mapX, mapY, playerX, playerY, playerDir);
             }
             else {
                 std::cout << ' ';
@@ -68,6 +77,7 @@ void Map::render(int playerX, int playerY, int viewWidth, int viewHeight) {
         std::cout << std::endl;
     }
 }
+
 
 Cell** Map::GetData() {
     return data;
