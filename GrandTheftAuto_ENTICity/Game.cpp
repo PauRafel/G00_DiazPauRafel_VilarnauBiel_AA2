@@ -118,6 +118,11 @@ void Game::HandleInput() {
         }
     }
 
+    if (map->GetData()[playerY][playerX].type == CellType::Money) {
+        money += rand() % 100 + 1;
+        map->GetData()[playerY][playerX].type = CellType::Empty;
+    }
+
     map->GetData()[playerY][playerX].type = CellType::Player;
 }
 
