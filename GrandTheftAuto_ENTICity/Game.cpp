@@ -43,7 +43,7 @@ void Game::init() {
     map = new Map(config.mapWidth, config.mapHeight);
     map->initialize();
 
-    map->getData()[playerY][playerX] = 'v';
+    map->GetData()[playerY][playerX].type = CellType::Player;
 
     spawnPedestrians(config.pedestriansLosSantos);
 }
@@ -57,19 +57,19 @@ void Game::update() {
             if (!p.isAlive) continue;
             if ((abs(p.x - playerX) + abs(p.y - playerY)) == 1) {
                 p.isAlive = false;
-                map->getData()[p.y][p.x] = '$';
+                map->GetData()[p.y][p.x].type = CellType::Money;
 
                 bool placed = false;
                 while (!placed) {
                     int newX = rand() % map->getWidth();
                     int newY = rand() % map->getHeight();
 
-                    if (map->getData()[newY][newX] == ' ') {
+                    if (map->GetData()[newY][newX].type == CellType::Empty) {
                         p.x = newX;
                         p.y = newY;
-                        p.movesHorizontally = (rand() % 2 == 0);
                         p.isAlive = true;
-                        map->getData()[p.y][p.x] = 'P';
+                        p.movesHorizontally = rand() % 2 == 0;
+                        map->GetData()[p.y][p.x].type = CellType::Pedestrian;
                         placed = true;
                     }
                 }
@@ -79,6 +79,7 @@ void Game::update() {
         }
     }
 
+
     updatePedestrians();
 
     if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
@@ -87,41 +88,41 @@ void Game::update() {
 }
 
 void Game::HandleInput() {
-    map->getData()[playerY][playerX] = ' ';
+    map->GetData()[playerY][playerX].type = CellType::Empty;
 
     char newSymbol = 'v'; 
 
     if (GetAsyncKeyState(VK_UP) & 0x8000) {
-        if (map->getData()[playerY - 1][playerX] != 'X') {
+        if (map->GetData()[playerY - 1][playerX].type != CellType::Wall) {
             playerY--;
             newSymbol = '^';
         }
     }
     else if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
-        if (map->getData()[playerY + 1][playerX] != 'X') {
+        if (map->GetData()[playerY + 1][playerX].type != CellType::Wall) {
             playerY++;
             newSymbol = 'v';
         }
     }
     else if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
-        if (map->getData()[playerY][playerX - 1] != 'X') {
+        if (map->GetData()[playerY][playerX - 1].type != CellType::Wall) {
             playerX--;
             newSymbol = '<';
         }
     }
     else if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
-        if (map->getData()[playerY][playerX + 1] != 'X') {
+        if (map->GetData()[playerY][playerX + 1].type != CellType::Wall) {
             playerX++;
             newSymbol = '>';
         }
     }
 
-    if (map->getData()[playerY][playerX] == '$') {
+    if (map->GetData()[playerY][playerX].type == CellType::Money) {
         money += rand() % 100 + 1;
-        map->getData()[playerY][playerX] = ' ';
+        map->GetData()[playerY][playerX].type = CellType::Empty;
     }
 
-    map->getData()[playerY][playerX] = newSymbol;
+    map->GetData()[playerY][playerX].type = CellType::Player;
 }
 
 void Game::render() {
@@ -136,14 +137,14 @@ void Game::spawnPedestrians(int numPeatones){
         do {
             p.x = rand() % map->getWidth();
             p.y = rand() % map->getHeight();
-        } while (map->getData()[p.y][p.x] != ' ');
+        } while (map->GetData()[p.y][p.x].type != CellType::Empty);
 
         p.movesHorizontally = (rand() % 2 == 0);
         p.isAlive = true;
 
         pedestrians.push_back(p);
 
-        map->getData()[p.y][p.x] = 'P';
+        map->GetData()[p.y][p.x].type = CellType::Pedestrian;
     }
 }
 
@@ -153,22 +154,21 @@ void Game::updatePedestrians(){
 
         if (abs(playerX - p.x) <= 1 && abs(playerY - p.y) <= 1) continue;
 
-        map->getData()[p.y][p.x] = ' ';
+        map->GetData()[p.y][p.x].type = CellType::Empty;
 
         int move = (rand() % 2 == 0) ? -1 : 1;
 
         if (p.movesHorizontally) {
-            if (map->getData()[p.y][p.x + move] == ' ') {
+            if (map->GetData()[p.y][p.x + move].type == CellType::Empty) {
                 p.x += move;
             }
         }
         else {
-            if (map->getData()[p.y + move][p.x] == ' ') {
+            if (map->GetData()[p.y + move][p.x].type == CellType::Empty) {
                 p.y += move;
             }
         }
 
-        map->getData()[p.y][p.x] = 'P';
+        map->GetData()[p.y][p.x].type = CellType::Pedestrian;
     }
-
 }
