@@ -16,6 +16,8 @@ Game::Game() {
     playerDirection = Direction::Down;
     playerX = 1;
     playerY = 1;
+    paidTollToSanFierro = false;
+    paidTollToLasVenturas = false;
 }
 
 Game::~Game() {
@@ -124,6 +126,46 @@ void Game::HandleInput() {
     }
 
     map->GetData()[playerY][playerX].type = CellType::Player;
+
+    Cell& currentCell = map->GetData()[playerY][playerX];
+
+    if (currentCell.type == CellType::Toll) {
+
+        int wall1 = map->getWidth() / 3;
+        int wall2 = 2 * map->getWidth() / 3;
+
+        ConfigData config = loadConfig("config.txt");
+
+        if (playerX == wall1 && !paidTollToSanFierro) {
+            if (money >= config.tollToSanFierro) {
+                money -= config.tollToSanFierro;
+                currentCell.type = CellType::Empty;
+                paidTollToSanFierro = true;
+                std::cout << "[CJ] Has pagado el peaje a San Fierro.\n";
+                Sleep(500);
+            }
+            else {
+                std::cout << "[CJ] No tienes suficiente dinero para cruzar.\n";
+                Sleep(1000);
+                GameOver();
+            }
+        }
+        else if (playerX == wall2 && !paidTollToLasVenturas) {
+            if (money >= config.tollToLasVenturas) {
+                money -= config.tollToLasVenturas;
+                currentCell.type = CellType::Empty;
+                paidTollToLasVenturas = true;
+                std::cout << "[CJ] Has pagado el peaje a Las Venturas.\n";
+                Sleep(500);
+            }
+            else {
+                std::cout << "[CJ] No tienes suficiente dinero para cruzar.\n";
+                Sleep(1000);
+                GameOver();
+            }
+        }
+    }
+
 }
 
 void Game::render() {
@@ -172,4 +214,12 @@ void Game::updatePedestrians(){
 
         map->GetData()[p.y][p.x].type = CellType::Pedestrian;
     }
+}
+
+void Game::GameOver() {
+    system("cls");
+    std::cout << " CJ ha sido arrestado por no pagar el peaje " << std::endl;
+    std::cout << "GAME OVER" << std::endl;
+    Sleep(5000);
+    isRunning = false;
 }

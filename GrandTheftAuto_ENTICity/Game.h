@@ -21,6 +21,8 @@ private:
 
     Map* map;
     int playerX, playerY;
+    bool paidTollToSanFierro;
+    bool paidTollToLasVenturas;
 
     std::vector<Pedestrian> pedestrians;
     
@@ -31,5 +33,7 @@ private:
     void spawnPedestrians(int numPeatones);
     void updatePedestrians();
 
-    void HandleInput(); 
+    void HandleInput();
+
+    void GameOver();
 };
