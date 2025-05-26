@@ -47,6 +47,15 @@ void Game::init() {
     map = new Map(config.mapWidth, config.mapHeight);
     map->initialize();
 
+    int mapW = map->getWidth();
+    int mapH = map->getHeight();
+
+    int islandStart = mapW / 3;
+    int islandEnd = 2 * mapW / 3;
+
+    playerX = (islandStart + islandEnd) / 2;
+    playerY = mapH / 2;
+
     map->GetData()[playerY][playerX].type = CellType::Player;
 
     spawnPedestrians(config.losSantos.numPedestrians);
