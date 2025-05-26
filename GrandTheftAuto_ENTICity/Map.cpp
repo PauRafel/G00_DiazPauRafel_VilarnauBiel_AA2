@@ -22,11 +22,10 @@ Map::~Map() {
 }
 
 void Map::initialize() {
-    for (int y = 0; y < height; ++y) {
-        for (int x = 0; x < width; ++x) {
+    for (int y = 0; y < height; ++y)
+        for (int x = 0; x < width; ++x)
             data[y][x].type = CellType::Empty;
-        }
-    }
+
     for (int x = 0; x < width; ++x) {
         data[0][x].type = CellType::Wall;
         data[height - 1][x].type = CellType::Wall;
@@ -35,6 +34,20 @@ void Map::initialize() {
         data[y][0].type = CellType::Wall;
         data[y][width - 1].type = CellType::Wall;
     }
+
+    int width1 = width / 3;
+    int width2 = 2 * width / 3;
+
+    for (int y = 0; y < height; ++y) {
+
+        data[y][width1].type = CellType::Wall;
+        data[y][width2].type = CellType::Wall;
+    }
+
+    int midY = height / 2;
+
+    data[midY][width1].type = CellType::Toll;
+    data[midY][width2].type = CellType::Toll;
 }
 
 char GetSymbolForCell(const Cell& cell, int x, int y, int playerX, int playerY, Direction playerDir) {
@@ -52,6 +65,7 @@ char GetSymbolForCell(const Cell& cell, int x, int y, int playerX, int playerY, 
     case CellType::Pedestrian: return 'P';
     case CellType::Money: return '$';
     case CellType::Empty: return ' ';
+    case CellType::Toll: return 'T';
     }
 }
 

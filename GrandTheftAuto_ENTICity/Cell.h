@@ -6,7 +6,8 @@ enum class CellType {
     Wall,
     Player,
     Pedestrian,
-    Money
+    Money,
+    Toll
 };
 
 struct Cell {
