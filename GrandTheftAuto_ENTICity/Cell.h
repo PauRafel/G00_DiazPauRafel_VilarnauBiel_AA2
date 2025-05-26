@@ -7,9 +7,11 @@ enum class CellType {
     Player,
     Pedestrian,
     Money,
-    Toll
+    Toll,
+    Car
 };
 
 struct Cell {
     CellType type = CellType::Empty;
+    bool hasCar = false;
 };

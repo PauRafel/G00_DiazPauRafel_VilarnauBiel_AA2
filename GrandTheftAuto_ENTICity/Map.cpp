@@ -59,6 +59,7 @@ char GetSymbolForCell(const Cell& cell, int x, int y, int playerX, int playerY, 
         case Direction::Right: return '>';
         }
     }
+    if (cell.hasCar) return 'C';
 
     switch (cell.type) {
     case CellType::Wall: return 'X';

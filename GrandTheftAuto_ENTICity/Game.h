@@ -23,6 +23,8 @@ private:
     int playerX, playerY;
     bool paidTollToSanFierro;
     bool paidTollToLasVenturas;
+    bool inCar;
+    bool CanMoveTo(int x, int y);
 
     std::vector<Pedestrian> pedestrians;
     

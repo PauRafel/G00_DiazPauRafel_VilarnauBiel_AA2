@@ -18,6 +18,7 @@ Game::Game() {
     playerY = 1;
     paidTollToSanFierro = false;
     paidTollToLasVenturas = false;
+    inCar = false;
 }
 
 Game::~Game() {
@@ -49,6 +50,22 @@ void Game::init() {
     map->GetData()[playerY][playerX].type = CellType::Player;
 
     spawnPedestrians(config.losSantos.numPedestrians);
+
+    for (int i = 0; i < 3; ++i) {
+        bool placed = false;
+        while (!placed) {
+            int zoneStart = i * (map->getWidth() / 3);
+            int zoneEnd = (i + 1) * (map->getWidth() / 3);
+            int x = rand() % (zoneEnd - zoneStart) + zoneStart;
+            int y = rand() % map->getHeight();
+
+            if (map->GetData()[y][x].type == CellType::Empty) {
+                map->GetData()[y][x].hasCar = true;
+                placed = true;
+            }
+        }
+    }
+
 }
 
 void Game::update() {
@@ -95,39 +112,74 @@ void Game::HandleInput() {
 
     char newSymbol = 'v'; 
 
+    int step = inCar ? 2 : 1;
+    int mapW = map->getWidth();
+    int mapH = map->getHeight();
+
     if (GetAsyncKeyState(VK_UP) & 0x8000) {
-        if (map->GetData()[playerY - 1][playerX].type != CellType::Wall) {
-            playerY--;
+        bool canMove = true;
+        for (int i = 1; i <= step; ++i) {
+            if (playerY - i < 0 || map->GetData()[playerY - i][playerX].type == CellType::Wall) {
+                canMove = false;
+                break;
+            }
+        }
+        if (canMove) {
+            playerY -= step;
             playerDirection = Direction::Up;
         }
     }
     else if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
-        if (map->GetData()[playerY + 1][playerX].type != CellType::Wall) {
-            playerY++;
+        bool canMove = true;
+        for (int i = 1; i <= step; ++i) {
+            if (playerY + i >= mapH || map->GetData()[playerY + i][playerX].type == CellType::Wall) {
+                canMove = false;
+                break;
+            }
+        }
+        if (canMove) {
+            playerY += step;
             playerDirection = Direction::Down;
         }
     }
     else if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
-        if (map->GetData()[playerY][playerX - 1].type != CellType::Wall) {
-            playerX--;
+        bool canMove = true;
+        for (int i = 1; i <= step; ++i) {
+            if (playerX - i < 0 || map->GetData()[playerY][playerX - i].type == CellType::Wall) {
+                canMove = false;
+                break;
+            }
+        }
+        if (canMove) {
+            playerX -= step;
             playerDirection = Direction::Left;
         }
     }
     else if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
-        if (map->GetData()[playerY][playerX + 1].type != CellType::Wall) {
-            playerX++;
+        bool canMove = true;
+        for (int i = 1; i <= step; ++i) {
+            if (playerX + i >= mapW || map->GetData()[playerY][playerX + i].type == CellType::Wall) {
+                canMove = false;
+                break;
+            }
+        }
+        if (canMove) {
+            playerX += step;
             playerDirection = Direction::Right;
         }
     }
 
-    if (map->GetData()[playerY][playerX].type == CellType::Money) {
-        money += rand() % 100 + 1;
-        map->GetData()[playerY][playerX].type = CellType::Empty;
+
+
+    Cell& cellAfterMove = map->GetData()[playerY][playerX];
+    Cell& currentCell = map->GetData()[playerY][playerX];
+
+    if (inCar && cellAfterMove.type == CellType::Pedestrian) {
+        cellAfterMove.type = CellType::Money;
+        std::cout << "[CJ] ¡Atropellaste a un peatón!" << std::endl;
+        Sleep(2000);
     }
 
-    map->GetData()[playerY][playerX].type = CellType::Player;
-
-    Cell& currentCell = map->GetData()[playerY][playerX];
 
     if (currentCell.type == CellType::Toll) {
 
@@ -142,11 +194,11 @@ void Game::HandleInput() {
                 currentCell.type = CellType::Empty;
                 paidTollToSanFierro = true;
                 std::cout << "[CJ] Has pagado el peaje a San Fierro.\n";
-                Sleep(500);
+                Sleep(2000);
             }
             else {
                 std::cout << "[CJ] No tienes suficiente dinero para cruzar.\n";
-                Sleep(1000);
+                Sleep(2000);
                 GameOver();
             }
         }
@@ -156,15 +208,38 @@ void Game::HandleInput() {
                 currentCell.type = CellType::Empty;
                 paidTollToLasVenturas = true;
                 std::cout << "[CJ] Has pagado el peaje a Las Venturas.\n";
-                Sleep(500);
+                Sleep(2000);
             }
             else {
                 std::cout << "[CJ] No tienes suficiente dinero para cruzar.\n";
-                Sleep(1000);
+                Sleep(2000);
                 GameOver();
             }
         }
     }
+
+
+    if (GetAsyncKeyState(0x45) & 0x8000) {
+        if (!inCar && currentCell.hasCar) {
+            inCar = true;
+            currentCell.hasCar = false;
+            std::cout << "[CJ] Has subido al coche." << std::endl;
+            Sleep(2000);
+        }
+        else if (inCar) {
+            inCar = false;
+            currentCell.hasCar = true;
+            std::cout << "[CJ] Has salido del coche." << std::endl;
+            Sleep(2000);
+        }
+    }
+
+    if (map->GetData()[playerY][playerX].type == CellType::Money) {
+        money += rand() % 100 + 1;
+        map->GetData()[playerY][playerX].type = CellType::Empty;
+    }
+
+    map->GetData()[playerY][playerX].type = CellType::Player;
 
 }
 
@@ -220,6 +295,14 @@ void Game::GameOver() {
     system("cls");
     std::cout << " CJ ha sido arrestado por no pagar el peaje " << std::endl;
     std::cout << "GAME OVER" << std::endl;
-    Sleep(5000);
+    Sleep(7000);
     isRunning = false;
+}
+
+bool Game::CanMoveTo(int targetX, int targetY) {
+    if (targetX < 0 || targetX >= map->getWidth() || targetY < 0 || targetY >= map->getHeight())
+        return false;
+
+    CellType targetType = map->GetData()[targetY][targetX].type;
+    return targetType != CellType::Wall;
 }
