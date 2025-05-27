@@ -10,14 +10,23 @@
 #include "Pedestrian.h" 
 
 Game::Game() {
-    money = 0;  
+    playerAttack = 0;
+    playerHP = 0;
+
+    bigSmoke = { 0, 0, 0, 0, false, PedestrianType::Neutral };
+    bigSmokeAlive = false;
+
+    money = 0;
     isRunning = true;
     map = nullptr;
+
     playerDirection = Direction::Down;
     playerX = 1;
     playerY = 1;
+
     paidTollToSanFierro = false;
     paidTollToLasVenturas = false;
+
     inCar = false;
 }
 
@@ -62,10 +71,31 @@ void Game::init() {
     playerHP = config.playerHP;
     playerAttack = config.playerAttack;
 
-   
     spawnPedestrians(config.losSantos, 1, mapW / 3);
     spawnPedestrians(config.sanFierro, mapW / 3 + 1, 2 * mapW / 3);
     spawnPedestrians(config.lasVenturas, 2 * mapW / 3 + 1, mapW - 1);
+
+    bool placed = false;
+    int w = map->getWidth();
+    int h = map->getHeight();
+
+    while (!placed) {
+        int x = rand() % (w / 3) + 2 * (w / 3);
+        int y = rand() % h;
+
+        if (map->GetData()[y][x].type == CellType::Empty) {
+            bigSmoke.x = x;
+            bigSmoke.y = y;
+            bigSmoke.hp = 300;
+            bigSmoke.attack = 30;
+            bigSmoke.isAlive = true;
+            bigSmoke.type = PedestrianType::Aggressive;
+
+            bigSmokeAlive = true;
+            map->GetData()[y][x].type = CellType::Pedestrian;
+            placed = true;
+        }
+    }
 
    
     for (int i = 0; i < 3; ++i) {
@@ -86,8 +116,33 @@ void Game::init() {
 
 
 void Game::update() {
-
     bool moved = false;
+
+    if (bigSmokeAlive && std::abs(bigSmoke.x - playerX) + std::abs(bigSmoke.y - playerY) == 1) {
+        bigSmoke.hp -= playerAttack;
+        std::cout << "[CJ] ¡Atacas a Big Smoke!" << std::endl;
+
+        if (bigSmoke.hp <= 0) {
+            bigSmokeAlive = false;
+            map->GetData()[bigSmoke.y][bigSmoke.x].type = CellType::Empty;
+            std::cout << "¡Has derrotado a Big Smoke! ¡GANASTE EL JUEGO! " << std::endl;
+            Sleep(3000);
+            exit(0); // o llama a VictoryScreen() luego
+        }
+        else {
+            playerHP -= bigSmoke.attack;
+            std::cout << "[BIG SMOKE] ¡Te contraataca! Vida restante: " << playerHP << std::endl;
+            if (playerHP <= 0) {
+                std::cout << " CJ ha muerto en el duelo con Big Smoke... GAME OVER " << std::endl;
+                Sleep(3000);
+                GameOver();
+            }
+        }
+
+        Sleep(200);
+        return;
+    }
+
 
     if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
         for (auto& p : pedestrians) {

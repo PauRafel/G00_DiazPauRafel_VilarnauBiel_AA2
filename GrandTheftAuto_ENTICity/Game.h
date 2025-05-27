@@ -29,6 +29,9 @@ private:
     bool CanMoveTo(int x, int y);
 
     std::vector<Pedestrian> pedestrians;
+
+    Pedestrian bigSmoke;
+    bool bigSmokeAlive;
     
     void init();
     void update();
