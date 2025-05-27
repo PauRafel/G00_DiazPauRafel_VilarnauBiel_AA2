@@ -16,7 +16,7 @@ Game::Game() {
     bigSmoke = { 0, 0, 0, 0, false, PedestrianType::Neutral };
     bigSmokeAlive = false;
 
-    money = 0;
+    money = 10000;
     isRunning = true;
     map = nullptr;
 
@@ -127,7 +127,7 @@ void Game::update() {
             map->GetData()[bigSmoke.y][bigSmoke.x].type = CellType::Empty;
             std::cout << "¡Has derrotado a Big Smoke! ¡GANASTE EL JUEGO! " << std::endl;
             Sleep(3000);
-            exit(0); // o llama a VictoryScreen() luego
+            exit(0); 
         }
         else {
             playerHP -= bigSmoke.attack;
@@ -189,9 +189,9 @@ void Game::update() {
 }
 
 void Game::HandleInput() {
+    int prevX = playerX;
+    int prevY = playerY;
     map->GetData()[playerY][playerX].type = CellType::Empty;
-
-    char newSymbol = 'v'; 
 
     int step = inCar ? 2 : 1;
     int mapW = map->getWidth();
@@ -250,23 +250,17 @@ void Game::HandleInput() {
         }
     }
 
-
-
-    Cell& cellAfterMove = map->GetData()[playerY][playerX];
-    Cell& currentCell = map->GetData()[playerY][playerX];
-
-    if (inCar && cellAfterMove.type == CellType::Pedestrian) {
-        cellAfterMove.type = CellType::Money;
-        std::cout << "[CJ] ¡Atropellaste a un peatón!" << std::endl;
-        Sleep(3000);
+    
+    if (inCar) {
+        CheckAtropello(prevX, prevY, playerX, playerY);
     }
 
+    Cell& currentCell = map->GetData()[playerY][playerX];
 
+   
     if (currentCell.type == CellType::Toll) {
-
         int wall1 = map->getWidth() / 3;
         int wall2 = 2 * map->getWidth() / 3;
-
         ConfigData config = loadConfig("config.txt");
 
         if (playerX == wall1 && !paidTollToSanFierro) {
@@ -299,29 +293,30 @@ void Game::HandleInput() {
         }
     }
 
-
-    if (GetAsyncKeyState(0x45) & 0x8000) {
+  
+    if (GetAsyncKeyState(0x45) & 0x8000) { 
         if (!inCar && currentCell.hasCar) {
             inCar = true;
             currentCell.hasCar = false;
-            std::cout << "[CJ] Has subido al coche." << std::endl;
+            std::cout << "[CJ] Has subido al coche.\n";
             Sleep(2000);
         }
         else if (inCar) {
             inCar = false;
             currentCell.hasCar = true;
-            std::cout << "[CJ] Has salido del coche." << std::endl;
+            std::cout << "[CJ] Has salido del coche.\n";
             Sleep(2000);
         }
     }
 
-    if (map->GetData()[playerY][playerX].type == CellType::Money) {
+   
+    if (currentCell.type == CellType::Money) {
         money += rand() % 100 + 1;
-        map->GetData()[playerY][playerX].type = CellType::Empty;
+        currentCell.type = CellType::Empty;
     }
 
-    map->GetData()[playerY][playerX].type = CellType::Player;
-
+   
+    currentCell.type = CellType::Player;
 }
 
 void Game::render() {
@@ -403,4 +398,38 @@ bool Game::CanMoveTo(int targetX, int targetY) {
 
     CellType targetType = map->GetData()[targetY][targetX].type;
     return targetType != CellType::Wall;
+}
+
+void Game::CheckAtropello(int startX, int startY, int endX, int endY) {
+    int dx = (endX > startX) ? 1 : (endX < startX ? -1 : 0);
+    int dy = (endY > startY) ? 1 : (endY < startY ? -1 : 0);
+
+    int x = startX;
+    int y = startY;
+
+    int dxSteps = std::abs(endX - startX);
+    int dySteps = std::abs(endY - startY);
+    int steps = (dxSteps > dySteps) ? dxSteps : dySteps;
+
+    for (int i = 0; i < steps; ++i) {
+        x += dx;
+        y += dy;
+
+        if (bigSmokeAlive && x == bigSmoke.x && y == bigSmoke.y) {
+            std::cout << "[CJ] ¡No puedes atropellar a Big Smoke!" << std::endl;
+            Sleep(300);
+            continue;
+        }
+
+        for (auto& p : pedestrians) {
+            if (!p.isAlive) continue;
+            if (p.x == x && p.y == y) {
+                p.isAlive = false;
+                map->GetData()[p.y][p.x].type = CellType::Money;
+                std::cout << "[CJ] ¡Atropellaste a un peatón!" << std::endl;
+                Sleep(200);
+                break;
+            }
+        }
+    }
 }

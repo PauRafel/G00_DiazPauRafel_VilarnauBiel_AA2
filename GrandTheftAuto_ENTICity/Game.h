@@ -37,6 +37,8 @@ private:
     void update();
     void render();
 
+    void CheckAtropello(int startX, int startY, int endX, int endY);
+
     void spawnPedestrians(const IslandConfig& config, int xMin, int xMax);
     void updatePedestrians();
 
