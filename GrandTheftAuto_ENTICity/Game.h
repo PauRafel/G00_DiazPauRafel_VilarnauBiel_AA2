@@ -13,6 +13,8 @@ public:
 
     void run(); 
     int money; 
+    int playerHP;
+    int playerAttack;
     static const int NUM_FPS = 10;
     Direction playerDirection;
 
@@ -32,7 +34,7 @@ private:
     void update();
     void render();
 
-    void spawnPedestrians(int numPeatones);
+    void spawnPedestrians(const IslandConfig& config, int xMin, int xMax);
     void updatePedestrians();
 
     void HandleInput();

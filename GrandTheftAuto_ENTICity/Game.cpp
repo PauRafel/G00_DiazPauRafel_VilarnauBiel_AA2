@@ -58,13 +58,21 @@ void Game::init() {
 
     map->GetData()[playerY][playerX].type = CellType::Player;
 
-    spawnPedestrians(config.losSantos.numPedestrians);
+    
+    playerHP = config.playerHP;
+    playerAttack = config.playerAttack;
 
+   
+    spawnPedestrians(config.losSantos, 1, mapW / 3);
+    spawnPedestrians(config.sanFierro, mapW / 3 + 1, 2 * mapW / 3);
+    spawnPedestrians(config.lasVenturas, 2 * mapW / 3 + 1, mapW - 1);
+
+   
     for (int i = 0; i < 3; ++i) {
         bool placed = false;
         while (!placed) {
-            int zoneStart = i * (map->getWidth() / 3);
-            int zoneEnd = (i + 1) * (map->getWidth() / 3);
+            int zoneStart = i * (mapW / 3);
+            int zoneEnd = (i + 1) * (mapW / 3);
             int x = rand() % (zoneEnd - zoneStart) + zoneStart;
             int y = rand() % map->getHeight();
 
@@ -74,8 +82,8 @@ void Game::init() {
             }
         }
     }
-
 }
+
 
 void Game::update() {
 
@@ -84,28 +92,37 @@ void Game::update() {
     if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
         for (auto& p : pedestrians) {
             if (!p.isAlive) continue;
-            if ((abs(p.x - playerX) + abs(p.y - playerY)) == 1) {
-                p.isAlive = false;
-                map->GetData()[p.y][p.x].type = CellType::Money;
 
-                bool placed = false;
-                while (!placed) {
-                    int newX = rand() % map->getWidth();
-                    int newY = rand() % map->getHeight();
+            int dx = std::abs(p.x - playerX);
+            int dy = std::abs(p.y - playerY);
 
-                    if (map->GetData()[newY][newX].type == CellType::Empty) {
-                        p.x = newX;
-                        p.y = newY;
-                        p.isAlive = true;
-                        p.movesHorizontally = rand() % 2 == 0;
-                        map->GetData()[p.y][p.x].type = CellType::Pedestrian;
-                        placed = true;
+            if ((dx + dy) == 1) { 
+                p.hp -= playerAttack;
+                std::cout << "[CJ] ¡Atacas a un peatón!" << std::endl;
+
+                if (p.hp <= 0) {
+                    p.isAlive = false;
+                    map->GetData()[p.y][p.x].type = CellType::Money;
+                    std::cout << "[CJ] ¡El peatón ha muerto y dejó dinero!" << std::endl;
+                    Sleep(2500);
+                }
+                else if (p.type == PedestrianType::Aggressive) {
+                    playerHP -= p.attack;
+                    std::cout << "[PEATÓN] ¡Te ha contraatacado! Vida restante: " << playerHP << std::endl;
+                    Sleep(2500);
+
+                    if (playerHP <= 0) {
+                        std::cout << " CJ ha muerto en combate... GAME OVER " << std::endl;
+                        Sleep(5000);
+                        GameOver();
                     }
                 }
 
-                break;
+                break; 
             }
         }
+
+        Sleep(200); 
     }
 
 
@@ -186,7 +203,7 @@ void Game::HandleInput() {
     if (inCar && cellAfterMove.type == CellType::Pedestrian) {
         cellAfterMove.type = CellType::Money;
         std::cout << "[CJ] ¡Atropellaste a un peatón!" << std::endl;
-        Sleep(2000);
+        Sleep(3000);
     }
 
 
@@ -203,11 +220,11 @@ void Game::HandleInput() {
                 currentCell.type = CellType::Empty;
                 paidTollToSanFierro = true;
                 std::cout << "[CJ] Has pagado el peaje a San Fierro.\n";
-                Sleep(2000);
+                Sleep(3000);
             }
             else {
                 std::cout << "[CJ] No tienes suficiente dinero para cruzar.\n";
-                Sleep(2000);
+                Sleep(3000);
                 GameOver();
             }
         }
@@ -217,11 +234,11 @@ void Game::HandleInput() {
                 currentCell.type = CellType::Empty;
                 paidTollToLasVenturas = true;
                 std::cout << "[CJ] Has pagado el peaje a Las Venturas.\n";
-                Sleep(2000);
+                Sleep(3000);
             }
             else {
                 std::cout << "[CJ] No tienes suficiente dinero para cruzar.\n";
-                Sleep(2000);
+                Sleep(3000);
                 GameOver();
             }
         }
@@ -257,48 +274,65 @@ void Game::render() {
     std::cout << "Dinero: $" << money << std::endl;
 }
 
-void Game::spawnPedestrians(int numPeatones){
-    for (int i = 0; i < numPeatones; ++i) {
+void Game::spawnPedestrians(const IslandConfig& config, int xMin, int xMax) {
+    for (int i = 0; i < config.numPedestrians; ++i) {
         Pedestrian p;
 
-        do {
-            p.x = rand() % map->getWidth();
+        bool placed = false;
+        while (!placed) {
+            p.x = rand() % (xMax - xMin) + xMin;
             p.y = rand() % map->getHeight();
-        } while (map->GetData()[p.y][p.x].type != CellType::Empty);
 
-        p.movesHorizontally = (rand() % 2 == 0);
-        p.isAlive = true;
+            if (map->GetData()[p.y][p.x].type == CellType::Empty) {
+                p.hp = config.pedestrianHP;
+                p.attack = config.pedestrianAttack;
+                p.isAlive = true;
+                p.type = (rand() % 100 < 25) ? PedestrianType::Aggressive : PedestrianType::Neutral;
 
-        pedestrians.push_back(p);
-
-        map->GetData()[p.y][p.x].type = CellType::Pedestrian;
+                pedestrians.push_back(p);
+                map->GetData()[p.y][p.x].type = CellType::Pedestrian;
+                placed = true;
+            }
+        }
     }
 }
 
-void Game::updatePedestrians(){
+
+void Game::updatePedestrians() {
     for (auto& p : pedestrians) {
         if (!p.isAlive) continue;
 
         if (abs(playerX - p.x) <= 1 && abs(playerY - p.y) <= 1) continue;
 
+       
         map->GetData()[p.y][p.x].type = CellType::Empty;
 
-        int move = (rand() % 2 == 0) ? -1 : 1;
+       
+        int dir = rand() % 4;
+        int newX = p.x;
+        int newY = p.y;
 
-        if (p.movesHorizontally) {
-            if (map->GetData()[p.y][p.x + move].type == CellType::Empty) {
-                p.x += move;
-            }
-        }
-        else {
-            if (map->GetData()[p.y + move][p.x].type == CellType::Empty) {
-                p.y += move;
-            }
+        switch (dir) {
+        case 0: newX--; break; 
+        case 1: newX++; break; 
+        case 2: newY--; break; 
+        case 3: newY++; break; 
         }
 
+       
+        if (newX >= 0 && newX < map->getWidth() &&
+            newY >= 0 && newY < map->getHeight() &&
+            map->GetData()[newY][newX].type == CellType::Empty) {
+
+            p.x = newX;
+            p.y = newY;
+        }
+
+     
         map->GetData()[p.y][p.x].type = CellType::Pedestrian;
     }
 }
+
 
 void Game::GameOver() {
     system("cls");
