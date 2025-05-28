@@ -5,6 +5,15 @@
 #include "Pedestrian.h"
 #include "Direction.h"
 
+
+enum class GameState {
+    TitleScreen,
+    MainMenu,
+    Playing,
+    GameOver,
+    Victory
+};
+
 class Game {
 public:
 
@@ -32,10 +41,15 @@ private:
 
     Pedestrian bigSmoke;
     bool bigSmokeAlive;
-    
+    GameState state;
+
     void init();
     void update();
     void render();
+    void ShowTitleScreen();
+    void ShowMainMenu();
+    void ShowGameOverScreen();
+    void ShowVictoryScreen();
 
     void CheckAtropello(int startX, int startY, int endX, int endY);
 

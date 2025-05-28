@@ -10,13 +10,15 @@
 #include "Pedestrian.h" 
 
 Game::Game() {
+    state = GameState::TitleScreen;
+
     playerAttack = 0;
     playerHP = 0;
 
     bigSmoke = { 0, 0, 0, 0, false, PedestrianType::Neutral };
     bigSmokeAlive = false;
 
-    money = 10000;
+    money = 0;
     isRunning = true;
     map = nullptr;
 
@@ -37,15 +39,36 @@ Game::~Game() {
 }
 
 void Game::run() {
-    init();
+    while (true) {
+        system("cls");
 
-    while (isRunning) {
-        HandleInput();
-        update();
-        render();
-        Sleep(1000 / NUM_FPS);
+        switch (state) {
+        case GameState::TitleScreen:
+            ShowTitleScreen();
+            break;
+
+        case GameState::MainMenu:
+            ShowMainMenu();
+            break;
+
+        case GameState::Playing:
+            HandleInput();
+            update();
+            render();
+            Sleep(1000 / NUM_FPS); 
+            break;
+
+        case GameState::GameOver:
+            ShowGameOverScreen();
+            return;
+
+        case GameState::Victory:
+            ShowVictoryScreen();
+            return;
+        }
     }
 }
+
 
 void Game::init() {
     srand(static_cast<unsigned int>(time(nullptr)));
@@ -120,14 +143,14 @@ void Game::update() {
 
     if (bigSmokeAlive && std::abs(bigSmoke.x - playerX) + std::abs(bigSmoke.y - playerY) == 1) {
         bigSmoke.hp -= playerAttack;
-        std::cout << "[CJ] ¡Atacas a Big Smoke!" << std::endl;
+        std::cout << "[CJ] Atacas a Big Smoke!" << std::endl;
 
         if (bigSmoke.hp <= 0) {
             bigSmokeAlive = false;
             map->GetData()[bigSmoke.y][bigSmoke.x].type = CellType::Empty;
-            std::cout << "¡Has derrotado a Big Smoke! ¡GANASTE EL JUEGO! " << std::endl;
+            std::cout << "Has derrotado a Big Smoke! GANASTE EL JUEGO! " << std::endl;
             Sleep(3000);
-            exit(0); 
+            ShowVictoryScreen(); 
         }
         else {
             playerHP -= bigSmoke.attack;
@@ -135,7 +158,7 @@ void Game::update() {
             if (playerHP <= 0) {
                 std::cout << " CJ ha muerto en el duelo con Big Smoke... GAME OVER " << std::endl;
                 Sleep(3000);
-                GameOver();
+                ShowGameOverScreen();
             }
         }
 
@@ -153,23 +176,23 @@ void Game::update() {
 
             if ((dx + dy) == 1) { 
                 p.hp -= playerAttack;
-                std::cout << "[CJ] ¡Atacas a un peatón!" << std::endl;
+                std::cout << "[CJ] Atacas a un peaton!" << std::endl;
 
                 if (p.hp <= 0) {
                     p.isAlive = false;
                     map->GetData()[p.y][p.x].type = CellType::Money;
-                    std::cout << "[CJ] ¡El peatón ha muerto y dejó dinero!" << std::endl;
+                    std::cout << "[CJ] El peaton ha muerto y dejo dinero en el suelo!" << std::endl;
                     Sleep(2500);
                 }
                 else if (p.type == PedestrianType::Aggressive) {
                     playerHP -= p.attack;
-                    std::cout << "[PEATÓN] ¡Te ha contraatacado! Vida restante: " << playerHP << std::endl;
+                    std::cout << "[PEATÓN] Te ha contraatacado! Vida restante: " << playerHP << std::endl;
                     Sleep(2500);
 
                     if (playerHP <= 0) {
                         std::cout << " CJ ha muerto en combate... GAME OVER " << std::endl;
                         Sleep(5000);
-                        GameOver();
+                        ShowGameOverScreen();
                     }
                 }
 
@@ -299,13 +322,13 @@ void Game::HandleInput() {
             inCar = true;
             currentCell.hasCar = false;
             std::cout << "[CJ] Has subido al coche.\n";
-            Sleep(2000);
+            Sleep(1000);
         }
         else if (inCar) {
             inCar = false;
             currentCell.hasCar = true;
             std::cout << "[CJ] Has salido del coche.\n";
-            Sleep(2000);
+            Sleep(1000);
         }
     }
 
@@ -390,6 +413,7 @@ void Game::GameOver() {
     std::cout << "GAME OVER" << std::endl;
     Sleep(7000);
     isRunning = false;
+    exit(0);
 }
 
 bool Game::CanMoveTo(int targetX, int targetY) {
@@ -416,8 +440,8 @@ void Game::CheckAtropello(int startX, int startY, int endX, int endY) {
         y += dy;
 
         if (bigSmokeAlive && x == bigSmoke.x && y == bigSmoke.y) {
-            std::cout << "[CJ] ¡No puedes atropellar a Big Smoke!" << std::endl;
-            Sleep(300);
+            std::cout << "[CJ] No puedes atropellar a Big Smoke!" << std::endl;
+            Sleep(500);
             continue;
         }
 
@@ -426,10 +450,54 @@ void Game::CheckAtropello(int startX, int startY, int endX, int endY) {
             if (p.x == x && p.y == y) {
                 p.isAlive = false;
                 map->GetData()[p.y][p.x].type = CellType::Money;
-                std::cout << "[CJ] ¡Atropellaste a un peatón!" << std::endl;
-                Sleep(200);
+                std::cout << "[CJ] Atropellaste a un peaton!" << std::endl;
+                Sleep(500);
                 break;
             }
         }
     }
+}
+
+void Game::ShowTitleScreen() {
+    std::cout << "==============================" << std::endl;
+    std::cout << "     GTA ENTI CITY 2D         " << std::endl;
+    std::cout << "By:                           " << std::endl;
+    std::cout << "  Pau Rafel Diaz Hernandez    " << std::endl;
+    std::cout << "  Biel Vilarnau Espinola      " << std::endl;
+    std::cout << "==============================" << std::endl;
+    std::cout << "Presiona cualquier tecla para continuar..." << std::endl;
+    system("pause > nul");
+    state = GameState::MainMenu;
+}
+
+void Game::ShowMainMenu() {
+    std::cout << "=== MENU PRINCIPAL ===" << std::endl;
+    std::cout << "1. Jugar" << std::endl;
+    std::cout << "2. Salir" << std::endl;
+    std::cout << "Selecciona una opcion: ";
+
+    char option;
+    std::cin >> option;
+
+    if (option == '1') {
+        init(); 
+        state = GameState::Playing;
+    }
+    else {
+        exit(0);
+    }
+}
+
+void Game::ShowGameOverScreen() {
+    std::cout << " GAME OVER " << std::endl;
+    std::cout << "CJ ha muerto en la lucha." << std::endl;
+    system("pause");
+    exit(0);
+}
+
+void Game::ShowVictoryScreen() {
+    std::cout << " VICTORIA! " << std::endl;
+    std::cout << "Has derrotado a Big Smoke y liberado Las Venturas." << std::endl;
+    system("pause");
+    exit(0);
 }
