@@ -1,0 +1,17 @@
+# Build directories
+bin/
+obj/
+x64/
+x86/
+Debug/
+Release/
+*.exe
+*.dll
+*.pdb
+*.cache
+
+# Visual Studio specific
+.vs/
+*.user
+*.suo
+*.sln.docstates
