@@ -405,7 +405,7 @@ void Game::HandleInput() {
 }
 
 void Game::render() {
-    map->render(playerX, playerY, 20, 10, playerDirection);
+    map->render(playerX, playerY, 20, 10, playerDirection, &bigSmoke, bigSmokeAlive);
     std::cout << "Dinero: $" << money << std::endl;
 }
 

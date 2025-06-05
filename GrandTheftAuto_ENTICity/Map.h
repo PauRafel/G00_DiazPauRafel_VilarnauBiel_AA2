@@ -3,6 +3,7 @@
 #include "Config.h"
 #include "Cell.h"
 #include "Direction.h"
+#include "Pedestrian.h"
 
 class Map {
 public:
@@ -10,7 +11,7 @@ public:
     ~Map();
 
     void initialize();    
-    void render(int playerX, int playerY, int viewWidth, int viewHeight, Direction playerDir);
+    void render(int playerX, int playerY, int viewWidth, int viewHeight, Direction playerDir, const Pedestrian* bigSmoke = nullptr, bool bigSmokeAlive = false);
     Cell** GetData();
     int getWidth() const { return width; }
     int getHeight() const { return height; }

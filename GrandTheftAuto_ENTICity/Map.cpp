@@ -50,7 +50,9 @@ void Map::initialize() {
     data[midY][width2].type = CellType::Toll;
 }
 
-char GetSymbolForCell(const Cell& cell, int x, int y, int playerX, int playerY, Direction playerDir) {
+char GetSymbolForCell(const Cell& cell, int x, int y, int playerX, int playerY, Direction playerDir,
+    const Pedestrian* bigSmoke = nullptr, bool bigSmokeAlive = false) {
+
     if (x == playerX && y == playerY) {
         switch (playerDir) {
         case Direction::Up: return '^';
@@ -59,7 +61,15 @@ char GetSymbolForCell(const Cell& cell, int x, int y, int playerX, int playerY, 
         case Direction::Right: return '>';
         }
     }
+
+
     if (cell.hasCar) return 'C';
+
+
+    if (bigSmokeAlive && bigSmoke && x == bigSmoke->x && y == bigSmoke->y) {
+        return 'B';
+    }
+
 
     switch (cell.type) {
     case CellType::Wall: return 'X';
@@ -67,11 +77,14 @@ char GetSymbolForCell(const Cell& cell, int x, int y, int playerX, int playerY, 
     case CellType::Money: return '$';
     case CellType::Empty: return ' ';
     case CellType::Toll: return 'T';
+    default: return '?';
     }
 }
 
 
-void Map::render(int playerX, int playerY, int viewWidth, int viewHeight, Direction playerDir) {
+
+void Map::render(int playerX, int playerY, int viewWidth, int viewHeight, Direction playerDir,
+    const Pedestrian* bigSmoke, bool bigSmokeAlive) {
     system("cls");
 
     int startX = playerX - viewWidth / 2;
@@ -83,7 +96,8 @@ void Map::render(int playerX, int playerY, int viewWidth, int viewHeight, Direct
             int mapY = startY + y;
 
             if (mapX >= 0 && mapX < width && mapY >= 0 && mapY < height) {
-                std::cout << GetSymbolForCell(data[mapY][mapX], mapX, mapY, playerX, playerY, playerDir);
+                std::cout << GetSymbolForCell(data[mapY][mapX], mapX, mapY, playerX, playerY, playerDir,
+                    bigSmoke, bigSmokeAlive);
             }
             else {
                 std::cout << ' ';
@@ -92,6 +106,7 @@ void Map::render(int playerX, int playerY, int viewWidth, int viewHeight, Direct
         std::cout << std::endl;
     }
 }
+
 
 
 Cell** Map::GetData() {
