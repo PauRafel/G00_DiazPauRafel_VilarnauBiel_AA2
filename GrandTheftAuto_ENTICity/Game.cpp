@@ -139,42 +139,62 @@ void Game::init() {
 
 
 void Game::update() {
+
     bool moved = false;
 
-    if (bigSmokeAlive && std::abs(bigSmoke.x - playerX) + std::abs(bigSmoke.y - playerY) == 1) {
-        bigSmoke.hp -= playerAttack;
-        std::cout << "[CJ] Atacas a Big Smoke!" << std::endl;
+    if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
 
-        if (bigSmoke.hp <= 0) {
-            bigSmokeAlive = false;
-            map->GetData()[bigSmoke.y][bigSmoke.x].type = CellType::Empty;
-            std::cout << "Has derrotado a Big Smoke! GANASTE EL JUEGO! " << std::endl;
-            Sleep(3000);
-            ShowVictoryScreen(); 
-        }
-        else {
-            playerHP -= bigSmoke.attack;
-            std::cout << "[BIG SMOKE] ¡Te contraataca! Vida restante: " << playerHP << std::endl;
-            if (playerHP <= 0) {
-                std::cout << " CJ ha muerto en el duelo con Big Smoke... GAME OVER " << std::endl;
-                Sleep(3000);
-                ShowGameOverScreen();
+        if (bigSmokeAlive) {
+            int dx = std::abs(bigSmoke.x - playerX);
+            int dy = std::abs(bigSmoke.y - playerY);
+
+            if ((dx + dy) == 1) {
+                bigSmoke.hp -= playerAttack;
+                std::cout << "[CJ] Atacas a Big Smoke con toda tu fuerza!" << std::endl;
+
+                if (bigSmoke.hp <= 0) {
+                    bigSmokeAlive = false;
+                    map->GetData()[bigSmoke.y][bigSmoke.x].type = CellType::Empty;
+                    std::cout << "[CJ] Has derrotado a Big Smoke! GANASTE EL JUEGO!" << std::endl;
+                    Sleep(3000);
+                    state = GameState::Victory;
+                    return;
+                }
+                else {
+
+                    std::string smokeDialogs[] = {
+                        "[BIG SMOKE] ¡All you had to do was follow the damn train, CJ!",
+                        "[BIG SMOKE] ¡No puedes detenerme, CJ!",
+                        "[BIG SMOKE] ¡Soy demasiado fuerte para ti!",
+                        "[BIG SMOKE] ¡Esto es por Grove Street!"
+                    };
+
+                    int randomDialog = rand() % 4;
+                    std::cout << smokeDialogs[randomDialog] << std::endl;
+
+                    playerHP -= bigSmoke.attack;
+                    std::cout << "Te ha contraatacado! Vida restante: " << playerHP << std::endl;
+
+                    if (playerHP <= 0) {
+                        std::cout << "[BIG SMOKE] CJ ha caído... GAME OVER" << std::endl;
+                        Sleep(3000);
+                        state = GameState::GameOver;
+                        return;
+                    }
+                }
+
+                Sleep(2500);
+                return;
             }
         }
 
-        Sleep(200);
-        return;
-    }
-
-
-    if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
         for (auto& p : pedestrians) {
             if (!p.isAlive) continue;
 
             int dx = std::abs(p.x - playerX);
             int dy = std::abs(p.y - playerY);
 
-            if ((dx + dy) == 1) { 
+            if ((dx + dy) == 1) {
                 p.hp -= playerAttack;
                 std::cout << "[CJ] Atacas a un peaton!" << std::endl;
 
@@ -196,12 +216,21 @@ void Game::update() {
                     }
                 }
 
-                break; 
+                break;
             }
         }
 
-        Sleep(200); 
+        Sleep(200);
     }
+
+
+    updatePedestrians();
+
+    if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
+        isRunning = false;
+    }
+}
+
 
 
     updatePedestrians();
