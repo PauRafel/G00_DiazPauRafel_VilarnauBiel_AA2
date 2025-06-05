@@ -5,8 +5,7 @@
 #include <ctime>
 #include "Game.h"
 #include "Config.h"  
-#include "Map.h"     
-#include "Player.h"  
+#include "Map.h"      
 #include "Pedestrian.h" 
 
 Game::Game() {
@@ -163,10 +162,10 @@ void Game::update() {
                 else {
 
                     std::string smokeDialogs[] = {
-                        "[BIG SMOKE] ¡All you had to do was follow the damn train, CJ!",
-                        "[BIG SMOKE] ¡No puedes detenerme, CJ!",
-                        "[BIG SMOKE] ¡Soy demasiado fuerte para ti!",
-                        "[BIG SMOKE] ¡Esto es por Grove Street!"
+                        "[BIG SMOKE] Solo tenias que seguir el maldito tren, CJ!",
+                        "[BIG SMOKE] No puedes detenerme, CJ!",
+                        "[BIG SMOKE] Soy demasiado fuerte para ti!",
+                        "[BIG SMOKE] Esto es por Grove Street!"
                     };
 
                     int randomDialog = rand() % 4;
@@ -231,14 +230,6 @@ void Game::update() {
     }
 }
 
-
-
-    updatePedestrians();
-
-    if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
-        isRunning = false;
-    }
-}
 
 void Game::HandleInput() {
     int prevX = playerX;
@@ -415,7 +406,6 @@ void Game::HandleInput() {
             }
         }
     }
-
 
    
     if (!inCar && currentCell.type == CellType::Money) {
