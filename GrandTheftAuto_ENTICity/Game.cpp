@@ -529,8 +529,8 @@ void Game::ShowTitleScreen() {
     std::cout << "  Pau Rafel Diaz Hernandez    " << std::endl;
     std::cout << "  Biel Vilarnau Espinola      " << std::endl;
     std::cout << "==============================" << std::endl;
-    std::cout << "Presiona cualquier tecla para continuar..." << std::endl;
-    system("pause > nul");
+    std::cout << "Cargando..." << std::endl;
+    Sleep(3000);  
     state = GameState::MainMenu;
 }
 
