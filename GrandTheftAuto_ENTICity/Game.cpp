@@ -223,7 +223,7 @@ void Game::HandleInput() {
     if (GetAsyncKeyState(VK_UP) & 0x8000) {
         bool canMove = true;
         for (int i = 1; i <= step; ++i) {
-            if (playerY - i < 0 || map->GetData()[playerY - i][playerX].type == CellType::Wall) {
+            if (playerY - i < 0 || map->GetData()[playerY - i][playerX].type == CellType::Wall || map->GetData()[playerY - i][playerX].hasCar) {
                 canMove = false;
                 break;
             }
@@ -236,7 +236,7 @@ void Game::HandleInput() {
     else if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
         bool canMove = true;
         for (int i = 1; i <= step; ++i) {
-            if (playerY + i >= mapH || map->GetData()[playerY + i][playerX].type == CellType::Wall) {
+            if (playerY + i >= mapH || map->GetData()[playerY + i][playerX].type == CellType::Wall || map->GetData()[playerY + i][playerX].hasCar) {
                 canMove = false;
                 break;
             }
@@ -249,7 +249,7 @@ void Game::HandleInput() {
     else if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
         bool canMove = true;
         for (int i = 1; i <= step; ++i) {
-            if (playerX - i < 0 || map->GetData()[playerY][playerX - i].type == CellType::Wall) {
+            if (playerX - i < 0 || map->GetData()[playerY][playerX - i].type == CellType::Wall || map->GetData()[playerY][playerX - i].hasCar) {
                 canMove = false;
                 break;
             }
@@ -262,7 +262,7 @@ void Game::HandleInput() {
     else if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
         bool canMove = true;
         for (int i = 1; i <= step; ++i) {
-            if (playerX + i >= mapW || map->GetData()[playerY][playerX + i].type == CellType::Wall) {
+            if (playerX + i >= mapW || map->GetData()[playerY][playerX + i].type == CellType::Wall || map->GetData()[playerY][playerX + i].hasCar) {
                 canMove = false;
                 break;
             }
@@ -317,20 +317,76 @@ void Game::HandleInput() {
     }
 
   
-    if (GetAsyncKeyState(0x45) & 0x8000) { 
-        if (!inCar && currentCell.hasCar) {
-            inCar = true;
-            currentCell.hasCar = false;
-            std::cout << "[CJ] Has subido al coche.\n";
-            Sleep(1000);
+    if (GetAsyncKeyState(0x45) & 0x8000) {
+        if (!inCar) {
+            bool foundCar = false;
+            int carX = -1, carY = -1;
+
+            int adjacentCells[4][2] = { {0, -1}, {0, 1}, {-1, 0}, {1, 0} };
+
+            for (int i = 0; i < 4; i++) {
+                int checkX = playerX + adjacentCells[i][0];
+                int checkY = playerY + adjacentCells[i][1];
+
+                if (checkX >= 0 && checkX < mapW && checkY >= 0 && checkY < mapH) {
+                    if (map->GetData()[checkY][checkX].hasCar &&
+                        map->GetData()[checkY][checkX].type == CellType::Empty) {
+                        foundCar = true;
+                        carX = checkX;
+                        carY = checkY;
+                        break;
+                    }
+                }
+            }
+
+            if (foundCar) {
+                inCar = true;
+                map->GetData()[carY][carX].hasCar = false;
+                std::cout << "[CJ] Has subido al coche.\n";
+                Sleep(1000);
+            }
+            else {
+                std::cout << "[CJ] No hay ningun coche cerca.\n";
+                Sleep(1000);
+            }
         }
         else if (inCar) {
-            inCar = false;
-            currentCell.hasCar = true;
-            std::cout << "[CJ] Has salido del coche.\n";
-            Sleep(1000);
+            bool foundSpot = false;
+            int spawnX = -1, spawnY = -1;
+
+            int adjacentCells[4][2] = { {0, -1}, {0, 1}, {-1, 0}, {1, 0} };
+
+            for (int i = 0; i < 4; i++) {
+                int checkX = playerX + adjacentCells[i][0];
+                int checkY = playerY + adjacentCells[i][1];
+
+                if (checkX >= 0 && checkX < mapW && checkY >= 0 && checkY < mapH) {
+                    if (map->GetData()[checkY][checkX].type == CellType::Empty &&
+                        !map->GetData()[checkY][checkX].hasCar) {
+                        foundSpot = true;
+                        spawnX = checkX;
+                        spawnY = checkY;
+                        break;
+                    }
+                }
+            }
+
+            if (foundSpot) {
+                inCar = false;
+                currentCell.hasCar = true;
+                map->GetData()[playerY][playerX].type = CellType::Empty;
+                playerX = spawnX;
+                playerY = spawnY;
+                std::cout << "[CJ] Has salido del coche.\n";
+                Sleep(1000);
+            }
+            else {
+                std::cout << "[CJ] No hay espacio para salir del coche.\n";
+                Sleep(1000);
+            }
         }
     }
+
 
    
     if (currentCell.type == CellType::Money) {
@@ -395,13 +451,13 @@ void Game::updatePedestrians() {
        
         if (newX >= 0 && newX < map->getWidth() &&
             newY >= 0 && newY < map->getHeight() &&
-            map->GetData()[newY][newX].type == CellType::Empty) {
+            map->GetData()[newY][newX].type == CellType::Empty &&
+            !map->GetData()[newY][newX].hasCar) { 
 
             p.x = newX;
             p.y = newY;
         }
 
-     
         map->GetData()[p.y][p.x].type = CellType::Pedestrian;
     }
 }
@@ -421,7 +477,9 @@ bool Game::CanMoveTo(int targetX, int targetY) {
         return false;
 
     CellType targetType = map->GetData()[targetY][targetX].type;
-    return targetType != CellType::Wall;
+    bool hasCar = map->GetData()[targetY][targetX].hasCar;
+
+    return targetType != CellType::Wall && !hasCar; 
 }
 
 void Game::CheckAtropello(int startX, int startY, int endX, int endY) {
