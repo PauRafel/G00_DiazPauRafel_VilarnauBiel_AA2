@@ -1,4 +1,4 @@
-# Build directories
+# Build directories and compiled files
 bin/
 obj/
 x64/
@@ -9,9 +9,77 @@ Release/
 *.dll
 *.pdb
 *.cache
+*.obj
+*.lib
+*.exp
+*.ilk
+*.log
 
-# Visual Studio specific
+# Visual Studio specific files
 .vs/
 *.user
 *.suo
+*.vcxproj.user
 *.sln.docstates
+*.sdf
+*.opensdf
+*.db
+*.opendb
+
+# IntelliSense and precompiled headers
+AutoPCH/
+*.ipch
+*.pch
+*.gch
+
+# Temporary build files
+*.tlog/
+*.recipe
+*.lastbuildstate
+*.enc
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Backup files
+*.bak
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+*.swp
+*.swo
+*~
+
+# Logs and crash dumps
+*.log
+*.crash
+*.dump
+*.mdmp
+
+# Package files
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Windows specific
+*.lnk
+
+# Git LFS (Large File Storage) - if needed
+*.gitattributes
