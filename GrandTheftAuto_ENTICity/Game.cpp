@@ -389,9 +389,15 @@ void Game::HandleInput() {
 
 
    
-    if (currentCell.type == CellType::Money) {
+    if (!inCar && currentCell.type == CellType::Money) {
         money += rand() % 100 + 1;
         currentCell.type = CellType::Empty;
+        std::cout << "[CJ] Has recogido dinero del suelo!\n";
+        Sleep(500);
+    }
+    else if (inCar && currentCell.type == CellType::Money) {
+        std::cout << "[CJ] No puedes recoger dinero mientras conduces.\n";
+        Sleep(500);
     }
 
    
